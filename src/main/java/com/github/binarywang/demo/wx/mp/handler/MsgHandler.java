@@ -7,6 +7,7 @@ import me.chanjar.weixin.common.session.WxSessionManager;
 import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.bean.message.WxMpXmlMessage;
 import me.chanjar.weixin.mp.bean.message.WxMpXmlOutMessage;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
@@ -44,6 +45,9 @@ public class MsgHandler extends AbstractHandler {
 //        }
         //TODO 组装回复消息
         String chatgptUrl = environment.getProperty("api.chatgpt.url");
-        return new TextBuilder().build(OkHttpUtils.builder().url(chatgptUrl + wxMessage.getContent()).get().sync(), wxMessage, weixinService);
+        if(StringUtils.isNotEmpty(chatgptUrl)){
+            return new TextBuilder().build(OkHttpUtils.builder().url(chatgptUrl + wxMessage.getContent()).get().sync(), wxMessage, weixinService);
+        }
+        return new TextBuilder().build("目前没有处理回复的策略哦", wxMessage, weixinService);
     }
 }
