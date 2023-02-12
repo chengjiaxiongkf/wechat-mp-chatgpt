@@ -1,19 +1,22 @@
 # wechat-mp-chatgpt
-微信公众号自动回复接入chatgpt开放AP
+微信公众号自动回复接入chatgpt开放AP,由于微信官方限制回复消息接口响应必须在5秒内，但是Chatgpt是境外请求，部署的服务没有CDN的情况延时较高，有可能回复不到微信公众号内。
 
-## step
 ### 获取你的Chatgpt的开放API https://platform.openai.com/account/api-keys
-### 启动一个封装了Chatgpt开放API的接口服务(在国外服务器或者具备科学上网的服务器)
+### 在下面配置API_KEY并以docker启动封装了Chatgpt开放API的接口服务(请在国外服务器或者具备科学上网的服务器)
 ```shell
 docker run -p 9001:8080 -e API_KEY=xxx -e -d -v $PWD/log:/app/log tomatocuke/openai
 echo "http://127.0.0.1:9001/test?msg=你是谁"
 ```
 
-### application.yml中配置上面chatgpt接口服务的接口url，以及公众号信息
+## Web版
+### 在本JAVA项目中根目录的index.html文件中配置上面chatgpt接口服务的接口url，把这个index.html放置到Nginx静态资源目录下。
+
+## 微信公众号版
+### 在本JAVA项目中application.yml中配置上面chatgpt接口服务的接口url，以及公众号信息
 ```yaml
 api:
   chatgpt:
-    url: xxxx
+    url: https://xxx.xxx.xxx.xx/test?msg=
 wx:
   mp:
     useRedis: false
