@@ -5,7 +5,7 @@
 ### 在下面配置API_KEY并以docker启动封装了Chatgpt开放API的接口服务(请在国外服务器或者具备科学上网的服务器)
 ```shell
 docker run -p 9001:8080 -e API_KEY=xxx -e -d -v $PWD/log:/app/log tomatocuke/openai
-echo "http://127.0.0.1:9001/test?msg=你是谁"
+echo "http://127.0.0.1:9001/test?msg=这是chatgpt自动回复机器人接口"
 ```
 
 ## Web版
